@@ -1,15 +1,32 @@
 // Selectors
 const cards = document.querySelectorAll('.memory-card');
 
+
+
+
 // Event Listeners
 cards.forEach(card => card.addEventListener('click', flipCard));
+
+
+
 
 // Variable
     let hasFlippedCard = false;
     let firstCard, secondCard;
     let lockBoard = false;  // To prevent user from breaking logic by clicking during un-flip
 
+
+
+
 // Functions
+(function shuffle() {
+    cards.forEach(card => {
+        let randomPosition = Math.floor(Math.random() * 12);
+        card.style.order = randomPosition;
+    });
+})();
+
+
 function flipCard(event) {
     if (lockBoard) return;
 
@@ -33,6 +50,7 @@ function flipCard(event) {
 
 }
 
+
 function checkForMatch() {
     const isMatch = (firstCard.dataset.framework === secondCard.dataset.framework);
     isMatch ? 
@@ -52,6 +70,7 @@ function checkForMatch() {
         }
     **************************************************************************/
 }
+
 
 function disableCards() {
     // Removes event listeners from the cards so that they are disabled
@@ -73,6 +92,7 @@ function unflipCards() {
         resetBoard();
     }, 1500); // Delay to see the flipping
 }
+
 
 function resetBoard() {
     [hasFlippedCard, lockBoard] = [false,false];
