@@ -7,9 +7,12 @@ cards.forEach(card => card.addEventListener('click', flipCard));
 // Variable
 let hasFlippedCard = false;
 let firstCard, secondCard;
+let lockBoard = false;
 
 // Functions
 function flipCard(event) {
+    if (lockBoard) return;
+
     // Add 'flip' class on click
     this.classList.add('flip');
 
@@ -56,9 +59,13 @@ function disableCards() {
 
 
 function unflipCards() {
+    lockBoard = true;
+
     // Removes flip class from the cards so that they un-flip
     setTimeout(() => {
         firstCard.classList.remove('flip');
         secondCard.classList.remove('flip');
+
+        lockBoard = false;
     }, 1500); // Delay to see the flipping
 }
