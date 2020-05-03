@@ -5,13 +5,15 @@ const cards = document.querySelectorAll('.memory-card');
 cards.forEach(card => card.addEventListener('click', flipCard));
 
 // Variable
-let hasFlippedCard = false;
-let firstCard, secondCard;
-let lockBoard = false;
+    let hasFlippedCard = false;
+    let firstCard, secondCard;
+    let lockBoard = false;  // To prevent user from breaking logic by clicking during un-flip
 
 // Functions
 function flipCard(event) {
     if (lockBoard) return;
+
+    if (this === firstCard) return; // To prevent user from double clicking on a card
 
     // Add 'flip' class on click
     this.classList.add('flip');
@@ -55,6 +57,8 @@ function disableCards() {
     // Removes event listeners from the cards so that they are disabled
     firstCard.removeEventListener('click', flipCard);
     secondCard.removeEventListener('click', flipCard);
+
+    resetBoard();
 }
 
 
@@ -66,6 +70,11 @@ function unflipCards() {
         firstCard.classList.remove('flip');
         secondCard.classList.remove('flip');
 
-        lockBoard = false;
+        resetBoard();
     }, 1500); // Delay to see the flipping
+}
+
+function resetBoard() {
+    [hasFlippedCard, lockBoard] = [false,false];
+    [firstCard, secondCard] = [null, null];
 }
